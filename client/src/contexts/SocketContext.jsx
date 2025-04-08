@@ -240,4 +240,5 @@ export const SocketProvider = ({ children }) => {
   );
 };
 
-export default SocketContext;
+// Export both the context and provider
+export { SocketContext, SocketProvider };
