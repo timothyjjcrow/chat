@@ -13,11 +13,12 @@ import { useAuth } from "./AuthContext.jsx";
 const SocketContext = createContext();
 
 // Hook to use the socket context
-export const useSocket = () => {
+const useSocket = () => {
   return useContext(SocketContext);
 };
 
-export const SocketProvider = ({ children }) => {
+// Provider component
+const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
   const [currentChannelId, setCurrentChannelId] = useState(null);
@@ -240,5 +241,5 @@ export const SocketProvider = ({ children }) => {
   );
 };
 
-// Export the context only, since SocketProvider is already exported above
-export { SocketContext };
+// Single export statement at the end
+export { SocketContext, SocketProvider, useSocket };
