@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.IO Test</title>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #messages {
+        height: 300px;
+        border: 1px solid #ccc;
+        overflow-y: auto;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      #message {
+        width: 70%;
+        padding: 5px;
+      }
+      button {
+        padding: 5px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Socket.IO Test</h1>
+    <div id="connection-status">Status: Disconnected</div>
+    <div id="messages"></div>
+    <input type="text" id="message" placeholder="Type a message..." />
+    <button onclick="sendMessage()">Send</button>
+    <button onclick="disconnect()">Disconnect</button>
+
+    <script>
+      const socket = io("http://localhost:4000");
+      const messagesDiv = document.getElementById("messages");
+      const statusDiv = document.getElementById("connection-status");
+      const messageInput = document.getElementById("message");
+
+      // Connection event
+      socket.on("connect", () => {
+        statusDiv.textContent = `Status: Connected (ID: ${socket.id})`;
+        addMessage("System", "Connected to server");
+        console.log("Connected to server");
+      });
+
+      // Disconnection event
+      socket.on("disconnect", () => {
+        statusDiv.textContent = "Status: Disconnected";
+        addMessage("System", "Disconnected from server");
+        console.log("Disconnected from server");
+      });
+
+      // Message reception
+      socket.on("receiveMessage", (message) => {
+        addMessage(
+          message.sender || "Anonymous",
+          message.text,
+          message.timestamp
+        );
+        console.log("Message received:", message);
+      });
+
+      // Send message function
+      function sendMessage() {
+        const text = messageInput.value.trim();
+        if (text) {
+          const message = {
+            sender: "Test User",
+            text: text,
+            socketId: socket.id,
+          };
+          socket.emit("sendMessage", message);
+          messageInput.value = "";
+          console.log("Message sent:", message);
+        }
+      }
+
+      // Disconnect function
+      function disconnect() {
+        socket.disconnect();
+      }
+
+      // Helper to add messages to the UI
+      function addMessage(sender, text, timestamp = new Date().toISOString()) {
+        const time = new Date(timestamp).toLocaleTimeString();
+        const messageElement = document.createElement("div");
+        messageElement.innerHTML = `<strong>${sender}</strong> (${time}): ${text}`;
+        messagesDiv.appendChild(messageElement);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Allow sending with Enter key
+      messageInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          sendMessage();
+        }
+      });
+    </script>
+  </body>
+</html>
