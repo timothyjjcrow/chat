@@ -1,0 +1,150 @@
+/* Server list component styles */
+.server-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.servers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.server-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #36393f;
+  transition: border-radius 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.server-item:hover {
+  background-color: #5865f2;
+  border-radius: 16px;
+}
+
+.server-item.active {
+  background-color: #5865f2;
+  border-radius: 16px;
+}
+
+.server-item.active::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background-color: white;
+  border-radius: 0 4px 4px 0;
+}
+
+.server-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: inherit;
+  background-color: #36393f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.server-item:hover .server-avatar {
+  background-color: #5865f2;
+  border-radius: 16px;
+}
+
+.server-item.active .server-avatar {
+  background-color: #5865f2;
+  border-radius: 16px;
+}
+
+.server-name {
+  display: none;
+}
+
+.no-servers {
+  color: #8e9297;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  width: 100%;
+}
+
+.server-list-loading,
+.server-list-error {
+  color: #8e9297;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  width: 100%;
+}
+
+/* Server actions */
+.server-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.join-new-server-button,
+.create-server-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #36393f;
+  color: #dcddde;
+  border: 1px dashed #8e9297;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.create-server-button {
+  background-color: #36393f;
+  color: #3ba55c;
+  border: 1px dashed #3ba55c;
+}
+
+.join-new-server-button:hover {
+  background-color: #4f545c;
+  color: white;
+  border: 1px solid #8e9297;
+  border-radius: 16px;
+}
+
+.create-server-button:hover {
+  background-color: rgba(59, 165, 92, 0.2);
+  color: white;
+  border: 1px solid #3ba55c;
+  border-radius: 16px;
+}
